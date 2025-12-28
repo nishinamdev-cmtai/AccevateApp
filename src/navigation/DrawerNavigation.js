@@ -11,7 +11,6 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import DashboardScreen from "../screens/DashboardScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
@@ -20,8 +19,9 @@ export default function DrawerNavigation({ onLogout,navigation }) {
 
     const [user, setUser] = useState(null);
    useEffect(()=>{
-checkUserName();
-   },[])
+    checkUserName();
+      },[]);
+      
         const checkUserName = async () => {
     try {
         const userData = await AsyncStorage.getItem('user');
@@ -43,11 +43,6 @@ const HeaderRightButtons = ({ navigation }) => (
 >
   <Ionicons name="call-outline" size={22} color="#fff" />
 </TouchableOpacity>
-
-
-   
-
-
     <TouchableOpacity
       style={{ marginHorizontal: 8 }}
      
@@ -57,7 +52,6 @@ const HeaderRightButtons = ({ navigation }) => (
 
   </View>
 );
-
 
   const CustomDrawerContent = (props) => {
    
@@ -83,27 +77,24 @@ const HeaderRightButtons = ({ navigation }) => (
 
          
           <View style={{ paddingHorizontal: 10 }}>
+       
+        <DrawerButton
+          title="Home"
+          IconComponent={MaterialCommunityIcons}
+          iconName="microsoft-windows"
+          onPress={() =>
+            props.navigation.navigate("Dashboard", { screen: "Dashboard" })
+          }
+        />
 
-         
-<DrawerButton
-  title="Home"
-  IconComponent={MaterialCommunityIcons}
-  iconName="microsoft-windows"
-  onPress={() =>
-    props.navigation.navigate("Dashboard", { screen: "Dashboard" })
-  }
-/>
-
-  
-  
-  <DrawerButton
-  title="Logout"
-  IconComponent={Ionicons}
-  iconName="power-outline"
-  color="red"
-  onPress={onLogout}
-/>
-  
+        <DrawerButton
+        title="Logout"
+        IconComponent={Ionicons}
+        iconName="power-outline"
+        color="red"
+        onPress={onLogout}
+      />
+        
   
           </View>
         </ScrollView>
@@ -133,7 +124,7 @@ const HeaderRightButtons = ({ navigation }) => (
 
 
     
-    <Drawer.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
+    <Drawer.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: true }} />
 
   </Drawer.Navigator>
 );
